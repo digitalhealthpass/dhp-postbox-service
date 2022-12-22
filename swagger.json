@@ -1,0 +1,826 @@
+{
+  "openapi":"3.0.3",
+  "info":{
+     "title":"Digital Health Pass API",
+     "description":"To view the available API endpoints, first login via the /users/login API and then refresh this page in your browser.",
+     "version":"1.0.0"
+  },
+  "tags":[
+     {
+        "name":"links",
+        "description":"Manage Links"
+     },
+     {
+      "name":"documents",
+      "description":"Manage Documents"
+   }
+  ],
+  "servers":[
+     {
+        "url":"/api/v1/postbox",
+        "description":"Sandbox"
+     }
+  ],
+  "paths":{
+     "/links":{
+        "post":{
+           "tags":[
+              "links"
+           ],
+           "summary":"Create links",
+           "description":"Create a link",
+           "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+           "requestBody":{
+              "description":"Link payload",
+              "required":true,
+              "content":{
+                 "application/json":{
+                    "schema":{
+                       "$ref":"#/components/schemas/CreateLinkRequest"
+                    }
+                 }
+              }
+           },
+           "responses":{
+              "200":{
+                 "description":"Successfully created Links",
+                 "content":{
+                    "application/json":{
+                       "schema":{
+                          "$ref":"#/components/schemas/CreateLinkResponse"
+                       }
+                    }
+                 }
+              },
+              "400":{
+                 "$ref":"#/components/responses/InvalidRequestError"
+              },
+              "401":{
+                 "$ref":"#/components/responses/UnauthorizedError"
+              },
+              "500":{
+                 "$ref":"#/components/responses/ServerError"
+              }
+           }
+        }
+     },
+     "/links/{id}/attachments":{
+        "get":{
+           "tags":[
+              "links"
+           ],
+           "summary":"Get links attachaments",
+           "description":"Get links attachaments",
+           "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "link id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+               "in": "header",
+               "name": "x-postbox-access-token",
+               "description": "Link Password",
+               "required": true,
+               "schema": {
+                 "type": "string"
+               }
+             }
+          ],
+           "responses":{
+              "200":{
+                 "description":"Successfully get Links attachments",
+                 "content":{
+                    "application/json":{
+                       "schema":{
+                          "$ref":"#/components/schemas/GetLinkAttachmentResponse"
+                       }
+                    }
+                 }
+              },
+              "400":{
+                 "$ref":"#/components/responses/InvalidRequestError"
+              },
+              "401":{
+                 "$ref":"#/components/responses/UnauthorizedError"
+              },
+              "500":{
+                 "$ref":"#/components/responses/ServerError"
+              }
+           }
+        }
+     },
+     "/links/{id}":{
+        "get":{
+           "tags":[
+              "links"
+           ],
+           "summary":"Get links ",
+           "description":"Get links ",
+           "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "link id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+               "in": "header",
+               "name": "x-postbox-access-token",
+               "description": "Link Password",
+               "required": true,
+               "schema": {
+                 "type": "string"
+               }
+             }
+          ],
+           "responses":{
+              "200":{
+                 "description":"Successfully get Links",
+                 "content":{
+                    "application/json":{
+                       "schema":{
+                          "$ref":"#/components/schemas/GetLinkResponse"
+                       }
+                    }
+                 }
+              },
+              "400":{
+                 "$ref":"#/components/responses/InvalidRequestError"
+              },
+              "401":{
+                 "$ref":"#/components/responses/UnauthorizedError"
+              },
+              "500":{
+                 "$ref":"#/components/responses/ServerError"
+              }
+           }
+        },
+        "delete":{
+           "tags":[
+              "links"
+           ],
+           "summary":"Delete links and its attached documents",
+           "description":"Get links ",
+           "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "link id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+               "in": "header",
+               "name": "x-postbox-access-token",
+               "description": "Link Password",
+               "required": true,
+               "schema": {
+                 "type": "string"
+               }
+             }
+          ],
+           "responses":{
+              "200":{
+                 "description":"Successfully deleetd Links and its attachments",
+                 "content":{
+                    "application/json":{
+                       "schema":{
+                          "$ref":"#/components/schemas/DeleteLinkResponse"
+                       }
+                    }
+                 }
+              },
+              "400":{
+                 "$ref":"#/components/responses/InvalidRequestError"
+              },
+              "401":{
+                 "$ref":"#/components/responses/UnauthorizedError"
+              },
+              "500":{
+                 "$ref":"#/components/responses/ServerError"
+              }
+           }
+        }
+     },
+     "/documents":{
+      "post":{
+         "tags":[
+            "documents"
+         ],
+         "summary":"Create Documents",
+         "description":"Create a Document",
+         "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+         "requestBody":{
+            "description":"Document payload",
+            "required":true,
+            "content":{
+               "application/json":{
+                  "schema":{
+                     "$ref":"#/components/schemas/CreateDocumentRequest"
+                  }
+               }
+            }
+         },
+         "responses":{
+            "200":{
+               "description":"Successfully created Documents",
+               "content":{
+                  "application/json":{
+                     "schema":{
+                        "$ref":"#/components/schemas/CreateDocumentResponse"
+                     }
+                  }
+               }
+            },
+            "400":{
+               "$ref":"#/components/responses/InvalidRequestError"
+            },
+            "401":{
+               "$ref":"#/components/responses/UnauthorizedError"
+            },
+            "500":{
+               "$ref":"#/components/responses/ServerError"
+            }
+         }
+      }
+   },
+   "/documents/{id}":{
+      "put":{
+         "tags":[
+            "documents"
+         ],
+         "summary":"Update Documents",
+         "description":"Update a Document",
+         "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "document id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+               "in": "header",
+               "name": "x-hpass-link-id",
+               "description": "Link Id",
+               "required": true,
+               "schema": {
+                 "type": "string"
+               }
+             }
+          ],
+         "requestBody":{
+            "description":"Document payload",
+            "required":true,
+            "content":{
+               "application/json":{
+                  "schema":{
+                     "$ref":"#/components/schemas/PutDocumentRequest"
+                  }
+               }
+            }
+         },
+         "responses":{
+            "200":{
+               "description":"Successfully created Documents",
+               "content":{
+                  "application/json":{
+                     "schema":{
+                        "$ref":"#/components/schemas/PutDocumentResponse"
+                     }
+                  }
+               }
+            },
+            "400":{
+               "$ref":"#/components/responses/InvalidRequestError"
+            },
+            "401":{
+               "$ref":"#/components/responses/UnauthorizedError"
+            },
+            "500":{
+               "$ref":"#/components/responses/ServerError"
+            }
+         }
+      },
+      "get":{
+         "tags":[
+            "documents"
+         ],
+         "summary":"Get Documents",
+         "description":"Get a Document",
+         "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "document id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+               "in": "header",
+               "name": "x-hpass-link-id",
+               "description": "Link Id",
+               "required": true,
+               "schema": {
+                 "type": "string"
+               }
+             },
+            {
+               "in": "header",
+               "name": "x-postbox-access-token",
+               "description": "Link Password",
+               "required": true,
+               "schema": {
+                 "type": "string"
+               }
+             }
+          ],
+         "responses":{
+            "200":{
+               "description":"Successfully created Documents",
+               "content":{
+                  "application/json":{
+                     "schema":{
+                        "$ref":"#/components/schemas/GetDocumentResponse"
+                     }
+                  }
+               }
+            },
+            "400":{
+               "$ref":"#/components/responses/InvalidRequestError"
+            },
+            "401":{
+               "$ref":"#/components/responses/UnauthorizedError"
+            },
+            "500":{
+               "$ref":"#/components/responses/ServerError"
+            }
+         }
+      },
+      "delete":{
+         "tags":[
+            "documents"
+         ],
+         "summary":"Delete Documents",
+         "description":"Delete a Document",
+         "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "document id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+               "in": "header",
+               "name": "x-hpass-link-id",
+               "description": "Link Id",
+               "required": true,
+               "schema": {
+                 "type": "string"
+               }
+             },
+            {
+               "in": "header",
+               "name": "x-postbox-access-token",
+               "description": "Link Password",
+               "required": true,
+               "schema": {
+                 "type": "string"
+               }
+             }
+          ],
+         "responses":{
+            "200":{
+               "description":"Successfully Deleted Documents",
+               "content":{
+                  "application/json":{
+                     "schema":{
+                        "$ref":"#/components/schemas/DeleteDocumentResponse"
+                     }
+                  }
+               }
+            },
+            "400":{
+               "$ref":"#/components/responses/InvalidRequestError"
+            },
+            "401":{
+               "$ref":"#/components/responses/UnauthorizedError"
+            },
+            "500":{
+               "$ref":"#/components/responses/ServerError"
+            }
+         }
+      }
+   }
+  },
+  "components":{
+     "securitySchemes":{
+        "bearerAuth":{
+           "type":"http",
+           "scheme":"bearer",
+           "bearerFormat":"JWT"
+        }
+     },
+     "schemas":{
+        "CreateLinkRequest":{
+           "type":"object",
+           "required":[
+              "no_expiration",
+              "owner"
+           ],
+           "properties":{
+              "no_expiration":{
+                 "type":"boolean"
+              },
+              "owner":{
+                 "type":"string"
+              }
+           }
+        },
+        "CreateLinkResponse":{
+           "type":"object",
+           "properties":{
+              "payload":{
+                 "type":"object",
+                 "properties":{
+                    "password":{
+                       "type":"string"
+                    },
+                    "ok":{
+                       "type":"boolean"
+                    },
+                    "id":{
+                       "type":"string"
+                    },
+                    "rev":{
+                       "type":"string"
+                    }
+                 }
+              },
+              "status":{
+                 "type":"integer",
+                 "default":201
+              }
+           }
+        },
+        "GetLinkAttachmentResponse":{
+           "type":"object",
+           "properties":{
+              "payload":{
+                 "type":"object",
+                 "properties":{
+                    "id":{
+                       "type":"string"
+                    },
+                    "attachments":{
+                       "type":"array",
+                       "items":{
+                          "type":"object",
+                          "properties":{
+                             "link":{
+                                "type":"string"
+                             },
+                             "name":{
+                                "type":"boolean"
+                             },
+                             "content":{
+                                "type":"string"
+                             },
+                             "expires_at":{
+                                "type":"string"
+                             }
+                          }
+                       }
+                    }
+                 }
+              },
+              "type":{
+                 "type":"string",
+                 "default":"link-attachments"
+              }
+           }
+        },
+        "GetLinkResponse":{
+           "type":"object",
+           "properties":{
+              "payload":{
+                 "type":"object",
+                 "properties":{
+                    "id":{
+                       "type":"string"
+                    },
+                    "owner":{
+                       "type":"string"
+                    },
+                    "multiple":{
+                       "type":"boolean"
+                    },
+                    "createdAt":{
+                       "type":"string"
+                    },
+                    "attachments":{
+                       "type":"array",
+                       "items":{
+                          "type":"object",
+                          "properties":{
+                             "id":{
+                                "type":"string"
+                             },
+                             "expires_at":{
+                                "type":"string"
+                             }
+                          }
+                       }
+                    }
+                 }
+              },
+              "type":{
+                 "type":"string",
+                 "default":"link"
+              }
+           }
+        },
+        "DeleteLinkResponse":{
+           "type":"object",
+           "properties":{
+              "status":{
+                 "type":"integer",
+                 "default":"200"
+              }
+           }
+        },
+        "CreateDocumentRequest":{
+         "type":"object",
+         "required":[
+            "content",
+            "password",
+            "link",
+            "name",
+            "expires_at"
+         ],
+         "properties":{
+            "content":{
+               "type":"string"
+            },
+            "password":{
+               "type":"string"
+            },
+            "link":{
+               "type":"string"
+            },
+            "name":{
+               "type":"string"
+            },
+            "expires_at":{
+               "type":"string"
+            }
+         }
+        },
+        "CreateDocumentResponse":{
+         "type":"object",
+         "properties":{
+            "payload":{
+               "type":"object",
+               "properties":{
+                  "ok":{
+                     "type":"boolean"
+                  },
+                  "id":{
+                     "type":"string"
+                  },
+                  "rev":{
+                     "type":"string"
+                  }
+               }
+            },
+            "status":{
+               "type":"integer",
+               "default":201
+            }
+         }
+        },
+        "PutDocumentRequest":{
+         "type":"object",
+         "required":[
+            "content",
+            "password",
+            "link",
+            "name",
+            "expires_at"
+         ],
+         "properties":{
+            "content":{
+               "type":"string"
+            },
+            "password":{
+               "type":"string"
+            }
+         }
+        },
+        "PutDocumentResponse":{
+         "type":"object",
+         "properties":{
+            "payload":{
+               "type":"object",
+               "properties":{
+                  "ok":{
+                     "type":"boolean"
+                  },
+                  "id":{
+                     "type":"string"
+                  },
+                  "rev":{
+                     "type":"string"
+                  }
+               }
+            },
+            "status":{
+               "type":"integer",
+               "default":200
+            }
+         }
+        },
+        "GetDocumentResponse":{
+         "type":"object",
+         "properties":{
+            "payload":{
+               "type":"object",
+               "properties":{
+                  "content":{
+                     "type":"string"
+                  },
+                  "password":{
+                     "type":"string"
+                  },
+                  "link":{
+                     "type":"string"
+                  },
+                  "name":{
+                     "type":"string"
+                  },
+                  "expires_at":{
+                     "type":"string"
+                  },
+                  "id":{
+                     "type" : "string"
+                  },
+                  "rev":{
+                     "type":"string"
+                  }
+               }
+            },
+            "status":{
+               "type":"integer",
+               "default":200
+            }
+         }
+        },
+        "DeleteDocumentResponse":{
+         "type":"object",
+         "properties":{
+            "payload":{
+               "type":"object",
+               "properties":{
+                  "ok":{
+                     "type":"boolean"
+                  },
+                  "id":{
+                     "type" : "string"
+                  },
+                  "rev":{
+                     "type":"string"
+                  }
+               }
+            },
+            "status":{
+               "type":"integer",
+               "default":200
+            }
+         }
+        },
+        "BasicErrorMessage":{
+           "type":"object",
+           "required":[
+              "error"
+           ],
+           "properties":{
+              "error":{
+                 "type":"object",
+                 "properties":{
+                    "message":{
+                       "type":"string"
+                    }
+                 }
+              }
+           }
+        }
+     },
+     "responses":{
+        "InvalidRequestError":{
+           "description":"Missing required fields in request body",
+           "content":{
+              "application/json":{
+                 "schema":{
+                    "$ref":"#/components/schemas/BasicErrorMessage"
+                 }
+              }
+           }
+        },
+        "UnauthorizedError":{
+           "description":"Logged in user is unauthorized to make this request",
+           "content":{
+              "application/json":{
+                 "schema":{
+                    "$ref":"#/components/schemas/BasicErrorMessage"
+                 }
+              }
+           }
+        },
+        "NotFoundError":{
+           "description":"Resource was not found",
+           "content":{
+              "application/json":{
+                 "schema":{
+                    "$ref":"#/components/schemas/BasicErrorMessage"
+                 }
+              }
+           }
+        },
+        "ConflictError":{
+           "description":"Conflict error",
+           "content":{
+              "application/json":{
+                 "schema":{
+                    "$ref":"#/components/schemas/BasicErrorMessage"
+                 }
+              }
+           }
+        },
+        "ServerError":{
+           "description":"Unexpected server error",
+           "content":{
+              "application/json":{
+                 "schema":{
+                    "$ref":"#/components/schemas/BasicErrorMessage"
+                 }
+              }
+           }
+        }
+     }
+  }
+}
